@@ -68,33 +68,21 @@ async function run() {
         token,
       });
     });
-    // Increment the like count for a question
-    app.post("/api/v1/ans/:qn/like", async (req, res) => {
-      const qn = parseInt(req.params.qn);
-
-      try {
-        const result = await AllData.updateOne(
-          { qn: qn },
-          { $inc: { likes: 1 } }
-        );
-
-        if (result.matchedCount === 0) {
-          return res.status(404).send({ message: "Question not found" });
-        }
-        res.send({ status: true, message: "Question liked successfully" });
-      } catch (error) {
-        console.error(error);
-        res.status(500).send({ message: "Internal Server Error" });
-      }
-    });
 
     //========================All Data =============================
     const AllData = db.collection("alldata");
     // create Question data
     app.post("/api/v1/ans", async (req, res) => {
-      const Supply = req.body;
-      const result = await AllData.insertOne(Supply);
-      res.send(result);
+      try {
+        const Supply = req.body;
+        const result = await AllData.insertOne(Supply);
+        res.send(result);
+      } catch (error) {
+        console.error(error);
+        res
+          .status(500)
+          .send({ status: false, message: "Internal Server Error" });
+      }
     });
     // Get all  Question and answer data for user
     app.get("/api/v1/ans", async (req, res) => {
@@ -130,13 +118,21 @@ async function run() {
     });
     // Get all sorted by most recent Question and answer
     app.get("/api/v1/recent-posts", async (req, res) => {
-      let query = {};
-      if (req.query.priority) {
-        query.priority = req.query.priority;
+      try {
+        let query = {};
+        if (req.query.priority) {
+          query.priority = req.query.priority;
+        }
+        const cursor = AllData.find(query).sort({ createdAt: -1 }).limit(5);
+        const supply = await cursor.toArray();
+        res.send({ status: true, data: supply });
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({
+          status: false,
+          message: "Internal recent posts Server Error",
+        });
       }
-      const cursor = AllData.find(query).sort({ createdAt: -1 }).limit(5);
-      const supply = await cursor.toArray();
-      res.send({ status: true, data: supply });
     });
     // get single question data by question number
     app.get("/api/v1/ans/:qn", async (req, res) => {
@@ -166,17 +162,12 @@ async function run() {
           pending: supply.pending,
         },
       };
-
-      const options = { upsert: true };
-
       try {
+        const options = { upsert: true };
         const result = await AllData.updateOne(filter, updateDoc, options);
         res.json(result);
       } catch (error) {
-        console.error(error);
-        res
-          .status(500)
-          .send({ status: false, message: "Internal Server Error" });
+        res.status(500).send({ message: error.message });
       }
     });
     // Delete Question data
@@ -232,9 +223,7 @@ async function run() {
   } finally {
   }
 }
-
 run().catch(console.dir);
-
 // Test route
 app.get("/", (req, res) => {
   const serverStatus = {
