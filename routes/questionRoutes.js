@@ -22,5 +22,4 @@ router.delete("/:qn", deleteQuestion);
 router.get("/search", searchQuestions);
 router.get("/trending", getTrending);
 router.get("/trending/:qn", getSingleTrending);
-
 module.exports = router;
