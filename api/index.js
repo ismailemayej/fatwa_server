@@ -6,7 +6,7 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const app = express();
 const port = process.env.PORT || 5000;
-// Middleware
+// Middleware m
 app.use(cors());
 app.use(express.json());
 // MongoDB Connection URL
