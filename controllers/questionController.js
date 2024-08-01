@@ -39,6 +39,25 @@ async function getAllQuestions(req, res) {
   }
 }
 
+async function getHomeData(req, res) {
+  try {
+    const { page = 1, limit = 10, approve = true } = req.query;
+    const questions = await allDataCollection
+      .find({ approve })
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .exec();
+    const count = await allDataCollection.countDocuments({ approve });
+    res.json({
+      data: questions,
+      totalPages: Math.ceil(count / limit),
+      currentPage: page,
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
 async function getRecentPosts(req, res) {
   try {
     const query = {};
@@ -156,4 +175,5 @@ module.exports = {
   searchQuestions,
   getTrending,
   getSingleTrending,
+  getHomeData,
 };

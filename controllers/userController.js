@@ -4,7 +4,6 @@ const { client } = require("../config/database");
 
 const db = client.db("fatwa");
 const usersCollection = db.collection("users");
-
 async function registerUser(req, res) {
   const { name, email, phone, password } = req.body;
   try {
@@ -28,7 +27,6 @@ async function registerUser(req, res) {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 }
-
 async function loginUser(req, res) {
   const { email, password } = req.body;
   try {

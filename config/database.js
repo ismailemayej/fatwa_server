@@ -10,7 +10,7 @@ async function connectDB() {
   try {
     await client.connect();
     console.log("Connected to MongoDB");
-  } catch (error) {
+  } catch (error) {              
     console.error("Error connecting to MongoDB:", error);
     process.exit(1);
   }
