@@ -9,7 +9,6 @@ const {
   searchQuestions,
   getTrending,
   getSingleTrending,
-  getHomeData,
 } = require("../controllers/questionController");
 
 const router = express.Router();
@@ -21,6 +20,5 @@ router.put("/:qn", updateQuestion);
 router.delete("/:qn", deleteQuestion);
 router.get("/search", searchQuestions);
 router.get("/trending", getTrending);
-router.get("/homedata", getHomeData);
 router.get("/trending/:qn", getSingleTrending);
 module.exports = router;
