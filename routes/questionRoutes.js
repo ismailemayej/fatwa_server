@@ -2,6 +2,7 @@ const express = require("express");
 const {
   createQuestion,
   getAllQuestions,
+  getUserEmail,
   getRecentPosts,
   getSingleQuestion,
   updateQuestion,
@@ -14,6 +15,7 @@ const {
 const router = express.Router();
 router.post("/", createQuestion);
 router.get("/", getAllQuestions);
+router.get("/user", getUserEmail);
 router.get("/recent-posts", getRecentPosts);
 router.get("/:qn", getSingleQuestion);
 router.put("/:qn", updateQuestion);

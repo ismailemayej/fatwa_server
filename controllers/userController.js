@@ -34,9 +34,13 @@ async function loginUser(req, res) {
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
-    const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
-      expiresIn: process.env.EXPIRES_IN,
-    });
+    const token = jwt.sign(
+      { email: user.email, role: user.role },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: process.env.EXPIRES_IN,
+      }
+    );
     res.json({ success: true, message: "Login successful", token });
   } catch (error) {
     res.status(500).json({ success: false, message: "Internal Server Error" });

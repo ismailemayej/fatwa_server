@@ -2,6 +2,7 @@ const { client } = require("../config/database");
 
 const db = client.db("fatwa");
 const allDataCollection = db.collection("alldata");
+const userData = db.collection("users");
 
 async function createQuestion(req, res) {
   try {
@@ -13,10 +14,23 @@ async function createQuestion(req, res) {
     res.status(500).send({ status: false, message: "Internal Server Error" });
   }
 }
+async function getUserEmail(req, res) {
+  try {
+    const query = {};
+    if (req.query.useremail) {
+      query.useremail = req.query.useremail;
+    }
+    const cursor = userData.find(query);
+    const supply = await cursor.toArray();
+    res.send({ status: true, data: supply });
+  } catch (error) {
+    res.status(500).send({ status: false, message: "Internal Server Error" });
+  }
+}
+
 async function getAllQuestions(req, res) {
   try {
     const query = {};
-
     if (req.query.approve) {
       query.approve = req.query.approve === "true";
     }
@@ -29,7 +43,6 @@ async function getAllQuestions(req, res) {
     if (req.query.useremail) {
       query.useremail = req.query.useremail;
     }
-
     const cursor = allDataCollection.find(query);
     const supply = await cursor.toArray();
     res.send({ status: true, data: supply });
@@ -37,7 +50,6 @@ async function getAllQuestions(req, res) {
     res.status(500).send({ status: false, message: "Internal Server Error" });
   }
 }
-
 async function getRecentPosts(req, res) {
   try {
     const query = {};
