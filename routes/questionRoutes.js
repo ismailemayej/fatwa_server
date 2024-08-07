@@ -11,7 +11,6 @@ const {
   getTrending,
   getSingleTrending,
 } = require("../controllers/questionController");
-
 const router = express.Router();
 router.post("/", createQuestion);
 router.get("/", getAllQuestions);
