@@ -2,27 +2,12 @@ const { client } = require("../config/database");
 
 const db = client.db("fatwa");
 const allDataCollection = db.collection("alldata");
-const userData = db.collection("users");
-
 async function createQuestion(req, res) {
   try {
     const supply = req.body;
     supply.createdAt = new Date();
     const result = await allDataCollection.insertOne(supply);
     res.send(result);
-  } catch (error) {
-    res.status(500).send({ status: false, message: "Internal Server Error" });
-  }
-}
-async function getUserEmail(req, res) {
-  try {
-    const query = {};
-    if (req.query.useremail) {
-      query.useremail = req.query.useremail;
-    }
-    const cursor = userData.find(query);
-    const supply = await cursor.toArray();
-    res.send({ status: true, data: supply });
   } catch (error) {
     res.status(500).send({ status: false, message: "Internal Server Error" });
   }
