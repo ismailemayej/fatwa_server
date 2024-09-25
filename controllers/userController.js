@@ -48,7 +48,6 @@ async function loginUser(req, res) {
 }
 async function getUserEmail(req, res) {
   const useremail = req.query.email;
-
   try {
     // Use findOne instead of find to get a single user
     const result = await usersCollection.findOne({ email: useremail });
@@ -63,7 +62,6 @@ async function getUserEmail(req, res) {
 // profile update
 async function updateUserProfile(req, res) {
   const email = req.params.email;
-  console.log("mail", email);
   const supply = req.body;
   const filter = { email };
   const updateDoc = {
@@ -85,7 +83,6 @@ async function updateUserProfile(req, res) {
 async function getAllUsers(req, res) {
   try {
     const users = await usersCollection.find().toArray();
-
     res.json({ success: true, users });
   } catch (error) {
     res.status(500).json({ success: false, message: "Internal Server Error" });

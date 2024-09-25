@@ -6,9 +6,12 @@ const {
   getSingleQuestion,
   updateQuestion,
   deleteQuestion,
-  searchQuestions,
   getTrending,
   getSingleTrending,
+  searchQuestions,
+  likeQuestion,
+  shareQuestion,
+  commentQuestion,
 } = require("../controllers/questionController");
 const router = express.Router();
 router.post("/", createQuestion);
@@ -20,4 +23,7 @@ router.delete("/:qn", deleteQuestion);
 router.get("/search", searchQuestions);
 router.get("/trending", getTrending);
 router.get("/trending/:qn", getSingleTrending);
+router.put("/:qn/like", likeQuestion);
+router.put("/:qn/share", shareQuestion);
+router.put("/:qn/comment", commentQuestion);
 module.exports = router;

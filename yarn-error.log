@@ -2,13 +2,13 @@ Arguments:
   C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js dev
 
 PATH: 
-  C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\nodejs\;C:\Users\salik\.console-ninja\.bin;C:\Users\salik\AppData\Local\Microsoft\WindowsApps;C:\Users\salik\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\salik\AppData\Local\Yarn\bin;C:\Users\salik\AppData\Roaming\npm;C:\Users\salik\AppData\Local\Programs\oh-my-posh\bin;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps;
+  C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\nodejs\;C:\Users\salik\AppData\Local\Microsoft\WindowsApps;C:\Users\salik\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\salik\AppData\Local\Yarn\bin;C:\Users\salik\AppData\Local\Programs\oh-my-posh\bin;C:\Users\salik\AppData\Local\Microsoft\WindowsApps;C:\Users\salik\AppData\Roaming\npm
 
 Yarn version: 
   1.22.19
 
 Node version: 
-  20.12.2
+  22.7.0
 
 Platform: 
   win32 x64
