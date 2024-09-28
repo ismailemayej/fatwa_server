@@ -66,29 +66,50 @@ async function getSingleQuestion(req, res) {
 }
 
 async function updateQuestion(req, res) {
-  const qn = parseInt(req.params.qn);
-  const supply = req.body;
-  const filter = { qn };
+  const qn = parseInt(req.params.qn); // Ensure qn is parsed correctly
+  const supply = req.body; // Get the new data from the request body
+  const filter = { qn }; // Filter to find the question by qn
+
+  // Construct the update document dynamically based on provided fields
   const updateDoc = {
-    $set: {
-      headline: supply.headline,
-      question: supply.question,
-      ans: supply.ans,
-      proof: supply.proof,
-      approve: supply.approve,
-      pending: supply.pending,
-    },
+    $set: {},
   };
+
+  // Conditionally set fields if they exist in the request body
+  if (supply.headline) updateDoc.$set.headline = supply.headline;
+  if (supply.question) updateDoc.$set.question = supply.question;
+  if (supply.ans) updateDoc.$set.ans = supply.ans;
+  if (supply.proof) updateDoc.$set.proof = supply.proof;
+  if (typeof supply.approve !== "undefined")
+    updateDoc.$set.approve = supply.approve;
+  if (typeof supply.pending !== "undefined")
+    updateDoc.$set.pending = supply.pending;
+  if (typeof supply.likes === "number") updateDoc.$set.likes = supply.likes;
+  // Check if comments are provided and are in the correct format
+  if (Array.isArray(supply.comments)) {
+    updateDoc.$set.comments = supply.comments;
+  }
+
   try {
-    const options = { upsert: true };
+    const options = { upsert: true }; // Upsert to create new entry if qn doesn't exist
     const result = await allDataCollection.updateOne(
       filter,
       updateDoc,
       options
     );
-    res.json(result);
+
+    // Send success response
+    res.json({
+      success: true,
+      message: "Question updated successfully",
+      data: result,
+    });
   } catch (error) {
-    res.status(500).send({ message: error.message });
+    // Handle errors and send failure response
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 }
 
